@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Atkinson_Hyperlegible } from "next/font/google";
 import "./globals.css";
+import Header from "@/app/header";
+import Footer from "@/app/footer";
+import clsx from "clsx";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const atkinson = Atkinson_Hyperlegible({
+  weight: ["400", "700"],
+  style: "normal",
 });
 
 export const metadata: Metadata = {
@@ -25,9 +23,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${atkinson.className} antialiased bg-ecBackgroundBody dark:bg-ecBackgroundBodyDark text-ecForeground dark:text-ecForegroundDark`}
       >
-        {children}
+        <div
+          className={clsx(
+            "bg-ecBackground text-ecForeground dark:bg-ecBackgroundDark dark:text-ecForegroundDark transition-colors",
+            "mb-16 mt-[4rem]"
+          )}
+        >
+          <Header />
+          {children}
+          <Footer />
+        </div>
       </body>
     </html>
   );
