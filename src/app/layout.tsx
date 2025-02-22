@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/app/header";
 import Footer from "@/app/footer";
 import clsx from "clsx";
+import { SessionProvider } from "next-auth/react";
 
 const atkinson = Atkinson_Hyperlegible({
   weight: ["400", "700"],
@@ -27,16 +28,18 @@ export default function RootLayout({
       <body
         className={`${atkinson.className} antialiased bg-ecBackgroundBody dark:bg-ecBackgroundBodyDark text-ecForeground dark:text-ecForegroundDark`}
       >
-        <div
-          className={clsx(
-            "bg-ecBackground text-ecForeground dark:bg-ecBackgroundDark dark:text-ecForegroundDark transition-colors",
-            "mb-16 mt-[4rem]"
-          )}
-        >
-          <Header />
-          {children}
-          <Footer />
-        </div>
+        <SessionProvider>
+          <div
+            className={clsx(
+              "bg-ecBackground text-ecForeground dark:bg-ecBackgroundDark dark:text-ecForegroundDark transition-colors",
+              "mb-16 mt-[4rem]"
+            )}
+          >
+            <Header />
+            {children}
+            <Footer />
+          </div>
+        </SessionProvider>
       </body>
     </html>
   );
