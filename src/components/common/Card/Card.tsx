@@ -15,6 +15,9 @@ const Card: React.FC<CardProps> = ({
   // onAddToCart,
   // onAddToWishlist,
 }) => {
+  const addToCart = (itemId: string) => {
+    console.log(itemId);
+  };
   return (
     <div className="bg-white shadow-lg rounded-lg relative overflow-hidden">
       {product.isOnSale ? (
@@ -44,7 +47,10 @@ const Card: React.FC<CardProps> = ({
           <span className="text-gray-900">
             ${product.salePrice || product.price}
           </span>
-          <button className="btn btn-sm uppercase">
+          <button
+            className="btn btn-sm uppercase"
+            onClick={() => addToCart(product.id)}
+          >
             <TiShoppingCart />
             Add to Cart
           </button>

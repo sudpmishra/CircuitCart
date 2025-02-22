@@ -2,8 +2,6 @@ import { Prisma } from "@prisma/client";
 
 import { prisma } from "@service/prisma";
 
-const ITEMS_PER_PAGE = 10;
-
 export class ProductService {
   // ✅ Create Product
   static async createProduct(data: Prisma.ProductCreateInput) {
@@ -14,7 +12,8 @@ export class ProductService {
   static async getProducts(
     page: number = 1,
     pageSize: number = 10,
-    query: string = ""
+    query: string = "",
+    category: string = ""
   ) {
     const skip = (page - 1) * pageSize;
     const products = await prisma.product.findMany({
@@ -22,6 +21,7 @@ export class ProductService {
       take: pageSize,
       orderBy: { createdAt: "desc" },
       where: {
+        ...(category != "All" ? { categoryId: category } : {}),
         OR: [
           {
             name: {
@@ -59,36 +59,5 @@ export class ProductService {
   }
   static async getAllProducts() {
     return prisma.product.findMany();
-  }
-  static async getProductPages(query: string) {
-    try {
-      const data = await prisma.product.findMany({
-        where: {
-          OR: [
-            {
-              name: {
-                contains: query,
-                mode: "insensitive", // Case insensitive search
-              },
-            },
-            {
-              description: {
-                contains: query,
-                mode: "insensitive", // Case insensitive search
-              },
-            },
-          ],
-        },
-        select: {
-          id: true,
-        },
-      });
-
-      const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE); // Calculate total pages
-      return totalPages;
-    } catch (error) {
-      console.error("Database Error:", error);
-      throw new Error("Failed to fetch total number of products.");
-    }
   }
 }

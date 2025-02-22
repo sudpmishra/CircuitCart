@@ -3,6 +3,7 @@ import Pagination from "@/components/common/Pagination/Pagination";
 import SearchBar from "@/components/common/SearchBar/SearchBar";
 import { CategoryService } from "@/service/categories/categories";
 import { ProductService } from "@/service/products/products";
+import { ITEMS_PER_PAGE } from "@/utils/utils";
 import clsx from "clsx";
 type ProductsPageProps = {
   searchParams?: Promise<{
@@ -16,14 +17,19 @@ const ProductsPage = async (props: ProductsPageProps) => {
   const query = searchParams?.query || "";
   const page = Number(searchParams?.page) || 1;
   const category = searchParams?.category || "All";
-  const totalPages = await ProductService.getProductPages(query);
   const categoryDetails = await CategoryService.getCategoryById(category);
 
-  const data = await ProductService.getProducts(page, 10, query);
+  const data = await ProductService.getProducts(
+    page,
+    ITEMS_PER_PAGE,
+    query,
+    category
+  );
+  const totalPages = data.totalPages;
   return (
     <div
       className={clsx(
-        "w-full min-h-[calc(100vh-10rem)]",
+        "w-full min-h-[calc(100vh-8rem)]",
         "px-8 py-4 md:px-16 md:py-8 lg:px-24 lg:py-16 sm:mx-auto",
         "bg-ecBackgroundBody dark:bg-ecBackgroundBodyDark text-ecForegroundBody dark:text-ecForegroundBodyDark"
       )}

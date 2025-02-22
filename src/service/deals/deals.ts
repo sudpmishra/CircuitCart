@@ -29,4 +29,10 @@ export class DealService {
       orderBy: { createdAt: "desc" },
     });
   }
+
+  static async getPromotionById(id: string) {
+    return prisma.promotion.findFirst({
+      where: { id },
+    });
+  }
 }

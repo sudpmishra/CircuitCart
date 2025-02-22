@@ -1,9 +1,8 @@
 import Image from "next/image";
-import { TiUser } from "react-icons/ti";
-import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
 import clsx from "clsx";
 import Cart from "@/components/Cart/Cart";
 import Link from "next/link";
+import UserProfile from "@/components/UserProfile/UserProfile";
 
 const Header = () => {
   return (
@@ -29,8 +28,7 @@ const Header = () => {
         </Link>
         <div className="flex items-center gap-4">
           <Cart />
-          <ThemeToggle />
-          <TiUser size={24} />
+          <UserProfile />
         </div>
       </div>
     </header>

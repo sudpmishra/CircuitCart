@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+:root {
+  color-scheme: light; /* Forces light mode */
+}
+.dark{
+  color-scheme: dark;
+}
+html {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
