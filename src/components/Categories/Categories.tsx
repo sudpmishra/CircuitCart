@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { ReactNode } from "react";
 import "react-multi-carousel/lib/styles.css";
 import CarouselComponent from "../common/Carousel/Carousel";
 import { GoCpu } from "react-icons/go";
@@ -97,7 +97,11 @@ const Categories = () => {
       <h2 className="text-2xl font-bold mb-4 text-center">Categories</h2>
       <CarouselComponent
         data={fakeData}
-        renderFunction={(item: any) => (
+        renderFunction={(item: {
+          id: number;
+          title: string;
+          icon: () => ReactNode;
+        }) => (
           <div
             onClick={() =>
               (window.location.href = `/products?category=${item.id}`)

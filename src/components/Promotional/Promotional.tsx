@@ -40,7 +40,13 @@ const Promotional = () => {
   );
 };
 
-const PromotionalCard = ({ title, description }) => {
+const PromotionalCard = ({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) => {
   return (
     <div className="bg-ecBackgroundCard dark:bg-ecBackgroundCardDark p-4 rounded-lg mb-4">
       {/* eslint-disable-next-line @next/next/no-img-element */}

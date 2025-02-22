@@ -19,6 +19,8 @@ const responsive = {
     items: 1,
   },
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const CarouselComponent = ({ data, renderFunction }: any) => {
   return (
     <div
@@ -26,6 +28,7 @@ const CarouselComponent = ({ data, renderFunction }: any) => {
       style={{ width: "90%", margin: "auto" }}
     >
       <Carousel responsive={responsive} autoPlay={true} infinite={true}>
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         {data.map((item: any) => (
           <div key={item.id}>{renderFunction(item)}</div>
         ))}

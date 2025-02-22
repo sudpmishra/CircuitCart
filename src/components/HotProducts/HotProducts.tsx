@@ -56,7 +56,11 @@ const HotProductsPage = () => {
       </h2>
       <CarouselComponent
         data={fakeData}
-        renderFunction={(item: any) => (
+        renderFunction={(item: {
+          id: string;
+          image: string;
+          title: string;
+        }) => (
           <div
             onClick={() => (window.location.href = `/products/${item.id}`)}
             style={{ cursor: "pointer", textAlign: "center", padding: "10px" }}
