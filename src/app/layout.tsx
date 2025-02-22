@@ -8,6 +8,8 @@ import clsx from "clsx";
 const atkinson = Atkinson_Hyperlegible({
   weight: ["400", "700"],
   style: "normal",
+  subsets: ["latin"],
+  preload: false,
 });
 
 export const metadata: Metadata = {
