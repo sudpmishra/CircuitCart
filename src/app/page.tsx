@@ -4,8 +4,14 @@ import clsx from "clsx";
 import OnSalePage from "@/components/OnSale/OnSale";
 import Promotional from "@/components/Promotional/Promotional";
 import Menu from "./menu";
+import { CategoryService } from "@/service/categories/categories";
+import { DealService } from "@/service/deals/deals";
 
-export default function Home() {
+export default async function Home() {
+  const categories = await CategoryService.getAllCategorys();
+  const hotDeals = await DealService.getHotProducts();
+  const saleProducts = await DealService.getSaleProducts();
+  const promotionalOffers = await DealService.getPromotionalOffers();
   return (
     <>
       <Menu />
@@ -16,10 +22,10 @@ export default function Home() {
           "bg-ecBackgroundBody dark:bg-ecBackgroundBodyDark text-ecForegroundBody dark:text-ecForegroundBodyDark"
         )}
       >
-        <Categories />
-        <OnSalePage />
-        <HotProductsPage />
-        <Promotional />
+        <Categories categories={categories} />
+        <OnSalePage items={saleProducts} />
+        <HotProductsPage items={hotDeals} />
+        <Promotional items={promotionalOffers} />
       </div>
     </>
   );
