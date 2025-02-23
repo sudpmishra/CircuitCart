@@ -52,6 +52,7 @@ export const addProductToCart = async (productId: string) => {
 export const getUserCartItems = async () => {
   const session = await auth();
   const userId = session?.user?.id;
+  if (!userId) return [];
 
   const db = prisma;
   const cart = await db.cart.findFirst({
