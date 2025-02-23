@@ -6,7 +6,6 @@ import { useSession } from "next-auth/react";
 
 const UserProfile = () => {
   const { data: session, status } = useSession();
-  console.log(session);
   return (
     <div className="rounded-md border border-gray-200 dark:border-gray-800 flex items-center justify-center gap-2 px-2 py-1">
       {status !== "authenticated" ? (

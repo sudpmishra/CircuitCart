@@ -1,6 +1,13 @@
+"use client";
+import { addProductToCart } from "@/service/carts/carts";
 import { formatRelativeDate } from "@/utils/utils";
 import { Category, Product, Promotion } from "@prisma/client";
 import clsx from "clsx";
+import { useEffect, useState, useTransition } from "react";
+import { CgSpinner } from "react-icons/cg";
+import { TbShoppingBagExclamation, TbShoppingBagPlus } from "react-icons/tb";
+import { TiShoppingCart } from "react-icons/ti";
+import useSWR from "swr";
 
 type ProductProps = {
   product: Product | null;
@@ -8,6 +15,43 @@ type ProductProps = {
   promotion: Promotion | null;
 };
 const ProductDetails = ({ product, category, promotion }: ProductProps) => {
+  const { mutate } = useSWR("/api/cart");
+
+  const [isPending, startTransition] = useTransition();
+  const [toaster, setToaster] = useState({
+    show: false,
+    success: false,
+    message: "",
+  });
+
+  const handleClick = () => {
+    startTransition(async () => {
+      const response = await addProductToCart(product?.id || "");
+      if (response.success) {
+        setToaster({
+          show: true,
+          success: true,
+          message: "Item has been added to cart",
+        });
+        mutate();
+      } else {
+        setToaster({
+          show: true,
+          success: false,
+          message: "Item could not be added to cart",
+        });
+      }
+    });
+  };
+  useEffect(() => {
+    if (toaster.show) {
+      const timer = setTimeout(() => {
+        setToaster((prev) => ({ ...prev, show: false }));
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [toaster.show]);
   if (!product) return <p>Loading...</p>;
 
   return (
@@ -48,6 +92,38 @@ const ProductDetails = ({ product, category, promotion }: ProductProps) => {
       <p className="text-sm text-gray-400 mt-4">
         Added {formatRelativeDate(product.createdAt)}
       </p>
+      <button
+        className="btn btn-sm btn-primary uppercase mt-4"
+        onClick={handleClick}
+        disabled={isPending}
+      >
+        {isPending ? (
+          <>
+            <CgSpinner className="animate-spin" />
+            Adding To Cart
+          </>
+        ) : (
+          <>
+            <TiShoppingCart />
+            Add to Cart
+          </>
+        )}
+      </button>
+      {toaster.show && (
+        <div className="toast toast-top mt-16">
+          {toaster.success ? (
+            <div className="alert bg-primary px-4 py-2 border-purple-300 text-white rounded-md">
+              <TbShoppingBagPlus />
+              <span>{toaster.message}</span>
+            </div>
+          ) : (
+            <div className="alert bg-red-500 px-4 py-2 border-red-300 text-white rounded-md">
+              <TbShoppingBagExclamation />
+              <span>{toaster.message}</span>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

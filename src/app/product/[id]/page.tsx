@@ -2,7 +2,7 @@ import { ProductService } from "@/service/products/products";
 import ProductDetails from "./ProctDetails";
 import { CategoryService } from "@/service/categories/categories";
 import { DealService } from "@/service/deals/deals";
-type ProductProps = { params: { id: string } };
+type ProductProps = { params: Promise<{ id: string }> };
 const ProductPage = async ({ params }: ProductProps) => {
   const { id } = await params; // Ensure params is awaited
 

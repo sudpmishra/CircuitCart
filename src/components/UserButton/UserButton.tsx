@@ -4,8 +4,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import { FaGithub, FaSignOutAlt } from "react-icons/fa";
 
 export function UserButton() {
-  const { data: session, status } = useSession();
-  console.log(session);
+  const { status } = useSession();
   return (
     <div className="mt-2">
       {status === "authenticated" && (
