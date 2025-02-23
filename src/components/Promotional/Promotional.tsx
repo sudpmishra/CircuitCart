@@ -1,3 +1,4 @@
+"use client";
 import { Product } from "@prisma/client";
 
 type PromotionalProps = {
@@ -30,7 +31,12 @@ const PromotionalCard = ({ item }: { item: Product }) => {
         width={150}
         height={150}
       />
-      <h3 className="text-lg font-semibold">{item.name}</h3>
+      <h3
+        className="text-lg font-semibold cursor-pointerminor"
+        onClick={() => (window.location.href = `/product/${item.id}`)}
+      >
+        {item.name}
+      </h3>
       <p className="text-sm">{item.description}</p>
     </div>
   );
