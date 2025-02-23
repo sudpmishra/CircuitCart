@@ -47,7 +47,6 @@ type IconMapKey =
   | "Prebuilt PCs & Laptops";
 
 const Categories = ({ categories }: { categories: Category[] }) => {
-  console.log(categories.map((x) => x.name));
   return (
     <div className="mb-8" id="categories">
       <h2 className="text-2xl font-bold mb-4 text-center">Categories</h2>

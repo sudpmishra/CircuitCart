@@ -16,7 +16,7 @@ const Menu = () => {
         <li>
           <Link
             href="/products"
-            className="hover:underline text-primary hover:text-secondary"
+            className="hover:bg-primary px-3 py-2 text-primary hover:text-white transition-colors"
           >
             All Products
           </Link>
@@ -24,7 +24,7 @@ const Menu = () => {
         <li>
           <Link
             href="#categories"
-            className="hover:underline text-primary hover:text-secondary"
+            className="hover:bg-primary px-3 py-2 text-primary hover:text-white transition-colors"
           >
             Categories
           </Link>
@@ -32,7 +32,7 @@ const Menu = () => {
         <li>
           <Link
             href="#hot-products"
-            className="hover:underline text-primary hover:text-secondary"
+            className="hover:bg-primary px-3 py-2 text-primary hover:text-white transition-colors"
           >
             Hot Products
           </Link>
@@ -40,7 +40,7 @@ const Menu = () => {
         <li>
           <Link
             href="#onsale"
-            className="hover:underline text-primary hover:text-secondary"
+            className="hover:bg-primary px-3 py-2 text-primary hover:text-white transition-colors"
           >
             On Sale
           </Link>
@@ -48,7 +48,7 @@ const Menu = () => {
         <li>
           <Link
             href="#promotional"
-            className="hover:underline text-primary hover:text-secondary"
+            className="hover:bg-primary px-3 py-2 text-primary hover:text-white transition-colors"
           >
             Promotional Offers
           </Link>
