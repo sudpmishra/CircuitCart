@@ -18,7 +18,7 @@ const HotProductsPage = ({ items }: HotProductsPageProps) => {
         data={items}
         renderFunction={(item: Product) => (
           <div
-            onClick={() => (window.location.href = `/products/${item.id}`)}
+            onClick={() => (window.location.href = `/product/${item.id}`)}
             style={{ cursor: "pointer", textAlign: "center", padding: "10px" }}
           >
             <div className="h-[20rem] w-full flex items-center justify-center overflow-hidden bg-white dark:bg-black">

@@ -3,6 +3,8 @@ import { addProductToCart } from "@/service/carts/carts";
 import { formatRelativeDate } from "@/utils/utils";
 import { Category, Product, Promotion } from "@prisma/client";
 import clsx from "clsx";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { CgSpinner } from "react-icons/cg";
 import { TbShoppingBagExclamation, TbShoppingBagPlus } from "react-icons/tb";
@@ -16,6 +18,7 @@ type ProductProps = {
 };
 const ProductDetails = ({ product, category, promotion }: ProductProps) => {
   const { mutate } = useSWR("/api/cart");
+  const { status } = useSession();
 
   const [isPending, startTransition] = useTransition();
   const [toaster, setToaster] = useState({
@@ -25,6 +28,12 @@ const ProductDetails = ({ product, category, promotion }: ProductProps) => {
   });
 
   const handleClick = () => {
+    if (status === "unauthenticated") {
+      const qs = new URLSearchParams({
+        callbackUrl: window.location.href,
+      }).toString();
+      redirect("/api/auth/signin?callback" + qs);
+    }
     startTransition(async () => {
       const response = await addProductToCart(product?.id || "");
       if (response.success) {

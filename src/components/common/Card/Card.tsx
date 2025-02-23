@@ -1,8 +1,10 @@
 "use client";
 import { addProductToCart } from "@/service/carts/carts";
 import { Product } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { CgSpinner } from "react-icons/cg";
 import { TbShoppingBagExclamation, TbShoppingBagPlus } from "react-icons/tb";
@@ -15,6 +17,7 @@ type CardProps = {
 
 const Card: React.FC<CardProps> = ({ product }) => {
   const { mutate } = useSWR("/api/cart");
+  const { status } = useSession();
 
   const [isPending, startTransition] = useTransition();
   const [toaster, setToaster] = useState({
@@ -24,6 +27,12 @@ const Card: React.FC<CardProps> = ({ product }) => {
   });
 
   const handleClick = () => {
+    if (status === "unauthenticated") {
+      const qs = new URLSearchParams({
+        callbackUrl: window.location.href,
+      }).toString();
+      redirect("/api/auth/signin?callback" + qs);
+    }
     startTransition(async () => {
       const response = await addProductToCart(product.id);
       if (response.success) {
@@ -55,7 +64,7 @@ const Card: React.FC<CardProps> = ({ product }) => {
     <div className="bg-gray-300 dark:bg-gray-700 shadow-lg rounded-lg relative overflow-hidden">
       {product.isOnSale ? (
         <span className="absolute bottom-0 left-0 bg-red-500 text-white px-2 py-1 text-xs font-bold rounded-bl">
-          was {product.price}
+          was ${product.price}
         </span>
       ) : null}
       {/* eslint-disable-next-line @next/next/no-img-element */}
