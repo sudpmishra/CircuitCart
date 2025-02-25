@@ -4,12 +4,18 @@
 
 :root {
   color-scheme: light; /* Forces light mode */
+  --fallback-b1: #f9fafb;
 }
-.dark{
+.dark {
   color-scheme: dark;
+  --fallback-b1: #1a202c;
 }
 html {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.skeleton {
+  @apply bg-gray-200 dark:bg-gray-800;
 }
