@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession, signIn, signOut } from "next-auth/react";
-import { FaGithub, FaSignOutAlt } from "react-icons/fa";
+import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { mutate } from "swr";
 
 export function UserButton() {
@@ -28,7 +28,7 @@ export function UserButton() {
           }}
           className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition flex items-center justify-around gap-2 w-full"
         >
-          <FaGithub size={20} />
+          <FaSignInAlt size={20} />
           Sign In
         </button>
       )}
