@@ -1,9 +1,10 @@
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import { prisma } from "./service/prisma";
+import Google from "next-auth/providers/google";
 
 export const { handlers, auth } = NextAuth({
-  providers: [GitHub],
+  providers: [GitHub,Google],
   callbacks: {
     async jwt({ token }) {
       if (!token.email) return token;
