@@ -9,28 +9,6 @@ export default function AudioPage() {
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
 
-  // Add oEmbed discovery link to head
-  useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "alternate";
-    link.type = "application/json+oembed";
-    link.href = `/api/oembed?url=${encodeURIComponent(
-      window.location.href
-    )}&format=json`;
-    link.title = "CircuitCart oEmbed Profile: JSON";
-    document.head.appendChild(link);
-
-    return () => {
-      // Cleanup: remove the link when component unmounts
-      const existingLink = document.querySelector(
-        'link[type="application/json+oembed"]'
-      );
-      if (existingLink) {
-        document.head.removeChild(existingLink);
-      }
-    };
-  }, []);
-
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;

@@ -78,5 +78,17 @@ export default function AudioLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <head>
+        <link
+          rel="alternate"
+          type="application/json+oembed"
+          href="/api/oembed?url=https%3A//circuit-cart-theta.vercel.app/audio&format=json"
+          title="CircuitCart oEmbed Profile: JSON"
+        />
+      </head>
+      {children}
+    </>
+  );
 }

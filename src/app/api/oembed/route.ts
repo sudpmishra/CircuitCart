@@ -23,8 +23,15 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Get the base URL from the request
-  const baseUrl = `${request.nextUrl.protocol}//${request.nextUrl.host}`;
+  // Get the base URL from the request - prefer the URL parameter's origin
+  let baseUrl;
+  try {
+    const urlObj = new URL(url);
+    baseUrl = `${urlObj.protocol}//${urlObj.host}`;
+  } catch {
+    // Fallback to request URL if URL parameter is invalid
+    baseUrl = `${request.nextUrl.protocol}//${request.nextUrl.host}`;
+  }
 
   // Calculate embed dimensions
   const width = Math.min(maxwidth, 400);
@@ -46,7 +53,7 @@ export async function GET(request: NextRequest) {
     thumbnail_width: 400,
     thumbnail_height: 400,
   };
-
+  console.log("===============", oembedResponse);
   return NextResponse.json(oembedResponse, {
     headers: {
       "Content-Type": "application/json",
